@@ -35,18 +35,26 @@ const InputView = {
 
   /**
    * 사용자가 이동할 칸을 입력받는다.
+   * @returns {"U" | "D"}
    */
   readMoving() {
     const INPUT = waitReadLine("이동할 칸을 선택해주세요. (위: U, 아래: D)");
-    const ISVALID = validMoveInput(INPUT);
-    if (!ISVALID) this.readMoving();
+    const IS_VALID = validMoveInput(INPUT);
+    if (!IS_VALID) this.readMoving();
     return INPUT;
   },
 
   /**
    * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
    */
-  readGameCommand() {},
+  readGameCommand() {
+    const INPUT = this.waitReadLine(
+      "게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)"
+    );
+    const IS_RETRY = validRetryInput(INPUT);
+    if (IS_RETRY) this.readGameCommand();
+    return INPUT;
+  },
 };
 
 module.exports = InputView;

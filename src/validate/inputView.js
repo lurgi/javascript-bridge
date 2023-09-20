@@ -35,6 +35,17 @@ const inputViewValid = {
     }
     return true;
   },
+  /**
+   * @param {string} input
+   * 입력값이 "R" | "Q" 인지 확인
+   */
+  validMoveInput(input) {
+    if (input !== "R" && input !== "Q") {
+      Console.print("[ERROR] 입력값은 'R' 혹은 'Q' 이어야 합니다");
+      return false;
+    }
+    return true;
+  },
 };
 
 module.exports = inputViewValid;
