@@ -1,4 +1,4 @@
-const { OutputView } = require("../src/OutputView");
+const { printStart } = require("../src/OutputView");
 const BridgeGame = require("../src/BridgeGame");
 
 class App {

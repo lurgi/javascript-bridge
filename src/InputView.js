@@ -15,7 +15,7 @@ const InputView = {
    * @param {string} prompt
    * 입력값을 받는 메서드 Console.readeLine을 비동기로 처리하는 함수
    */
-  async waitReadLine(prompt) {
+  waitReadLine(prompt) {
     validQuestion(prompt);
     const RETURN_CALLBACK = (resolve) => {
       Console.readLine(prompt, (input, reject) => {
@@ -37,8 +37,10 @@ const InputView = {
    * 사용자가 이동할 칸을 입력받는다.
    * @returns {"U" | "D"}
    */
-  readMoving() {
-    const INPUT = waitReadLine("이동할 칸을 선택해주세요. (위: U, 아래: D)");
+  async readMoving() {
+    const INPUT = await waitReadLine(
+      "이동할 칸을 선택해주세요. (위: U, 아래: D)"
+    );
     const IS_VALID = validMoveInput(INPUT);
     if (!IS_VALID) this.readMoving();
     return INPUT;
@@ -47,8 +49,8 @@ const InputView = {
   /**
    * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
    */
-  readGameCommand() {
-    const INPUT = this.waitReadLine(
+  async readGameCommand() {
+    const INPUT = await this.waitReadLine(
       "게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)"
     );
     const IS_RETRY = validRetryInput(INPUT);
