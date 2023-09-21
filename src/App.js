@@ -1,8 +1,8 @@
-const { Console } = require("@woowacourse/mission-utils");
 const BridgeGame = require("../src/BridgeGame");
 const BridgeMaker = require("./BridgeMaker");
 const { generate } = require("./BridgeRandomNumberGenerator");
 const { readBridgeSize } = require("./InputView");
+const { printStart } = require("./OutputView");
 class App {
   #bridge_size;
   async play() {
@@ -14,10 +14,13 @@ class App {
      * 3. 재시작 혹은 게임 종료
      *    BridgeGame.retry()함수 or BridgeGame().end()
      */
-    Console.print("다리 건너기 게임을 시작합니다.");
+    printStart();
     //다리를 생성한다.
     const BRIDGE = await this.makeBridgeToReadLenth();
-    //다리를 건넌다.
+    console.log(BRIDGE);
+    //다리게임 시작 건넌다.
+    const BRIDGE_GAME = new BridgeGame(BRIDGE);
+    BRIDGE_GAME.move();
   }
   /**
    * @returns {string[]}
