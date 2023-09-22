@@ -3,7 +3,7 @@
  * 게임 진행을 위해 필요한 메서드를 추가 하거나 변경할 수 있다.
  */
 const { readMoving, readGameCommand } = require("./InputView");
-const { printError } = require("./OutputView");
+const OutputView = require("./OutputView");
 
 class BridgeGame {
   /**
@@ -23,7 +23,7 @@ class BridgeGame {
     try {
       input = await readMoving();
     } catch (error) {
-      printError(error.message);
+      OutputView.printError(error.message);
       await this.move();
       return;
     }
@@ -38,8 +38,8 @@ class BridgeGame {
         this.#bridge_down.push(" O ");
       }
       this.#bridge_order++;
-      console.log(this.#bridge_order);
-      if (this.#bridge_order === this.#bridge.length) this.end();
+      OutputView.printMap(this.#bridge_up, this.#bridge_down);
+      if (this.#bridge_order === this.#bridge.length) return;
       await this.move();
       return;
     }
@@ -52,6 +52,7 @@ class BridgeGame {
         this.#bridge_up.push("   ");
         this.#bridge_down.push(" X ");
       }
+      OutputView.printMap(this.#bridge_up, this.#bridge_down);
       await this.retry();
     }
   }
@@ -71,7 +72,6 @@ class BridgeGame {
       return;
     }
 
-    if (input === "Q") this.end();
     if (input === "R") {
       this.#bridge_down = [];
       this.#bridge_up = [];
@@ -79,8 +79,6 @@ class BridgeGame {
       this.move();
     }
   }
-
-  end() {}
 }
 
 module.exports = BridgeGame;

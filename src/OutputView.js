@@ -16,7 +16,10 @@ const OutputView = {
     Console.print(errorMessage);
   },
 
-  printMap(bridge_up, bridge_down) {},
+  printMap(bridge_up, bridge_down) {
+    Console.print(`[${bridge_up.join("|")}]`);
+    Console.print(`[${bridge_down.join("|")}]`);
+  },
 
   /**
    * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
