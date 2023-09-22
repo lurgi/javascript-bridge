@@ -15,46 +15,63 @@ class BridgeGame {
   #bridge_down = [];
   #bridge_order = 0;
   #bridge;
+
+  #trial_count = 1;
+  #trial_pass = false;
   constructor(bridge) {
     this.#bridge = bridge;
   }
-  async move() {
-    let input;
+  /**
+   *
+   * @param {Promise} readFunction
+   * @returns
+   * 사용자의 입력을 받는 함수를 try catch 할 수 있습니다.
+   */
+  async tryRead(readFunction) {
     try {
-      input = await readMoving();
+      const INPUT = await readFunction();
+      return INPUT;
     } catch (error) {
       OutputView.printError(error.message);
-      await this.move();
-      return;
+      return false;
     }
+  }
 
-    if (this.#bridge[this.#bridge_order] === input) {
-      if (input === "U") {
-        this.#bridge_up.push(" O ");
-        this.#bridge_down.push("   ");
-      }
-      if (input === "D") {
-        this.#bridge_up.push("   ");
-        this.#bridge_down.push(" O ");
-      }
-      this.#bridge_order++;
-      OutputView.printMap(this.#bridge_up, this.#bridge_down);
-      if (this.#bridge_order === this.#bridge.length) return;
+  async move() {
+    const INPUT = await this.tryRead(readMoving);
+    if (!INPUT) {
       await this.move();
       return;
     }
-    if (this.#bridge[this.#bridge_order] !== input) {
-      if (input === "U") {
-        this.#bridge_up.push(" X ");
-        this.#bridge_down.push("   ");
-      }
-      if (input === "D") {
-        this.#bridge_up.push("   ");
-        this.#bridge_down.push(" X ");
-      }
-      OutputView.printMap(this.#bridge_up, this.#bridge_down);
-      await this.retry();
+    await this.moveProcess(INPUT);
+  }
+  /**
+   *
+   * @param {"U" | "D"} input
+   * 유저가 입력한 값을 토대로 움직이는 함수
+   */
+  async moveProcess(input) {
+    const IS_SUCCESS = this.#bridge[this.#bridge_order] === input;
+    const FLAG = IS_SUCCESS ? " O " : " X ";
+    this.#bridge_up.push(input === "U" ? FLAG : "   ");
+    this.#bridge_down.push(input === "D" ? FLAG : "   ");
+    OutputView.printMap(this.#bridge_up, this.#bridge_down);
+    this.#bridge_order++;
+    await this.nextMove(IS_SUCCESS);
+  }
+  /**
+   *
+   * @param {boolean} is_sucess
+   * 성공 여부를 인자로 받고, 다음 행동을 실행
+   */
+  async nextMove(is_sucess) {
+    if (is_sucess && this.#bridge_order === this.#bridge.length) {
+      this.#trial_pass = true;
+      OutputView.printResult(this.resultObj());
     }
+    if (is_sucess && this.#bridge_order !== this.#bridge.length)
+      await this.move();
+    if (!is_sucess) await this.retry();
   }
 
   /**
@@ -63,21 +80,36 @@ class BridgeGame {
    * 재시작을 위해 필요한 메서드의 반환 값(return value), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
   async retry() {
-    let input;
-    try {
-      input = await readGameCommand();
-    } catch (error) {
-      printError(error.message);
-      this.retry();
+    // let input;
+    // try {
+    //   input = await readGameCommand();
+    // } catch (error) {
+    //   printError(error.message);
+    //   this.retry();
+    //   return;
+    // }
+    const INPUT = await this.tryRead(readGameCommand);
+    if (!INPUT) {
+      await this.retry();
       return;
     }
-
-    if (input === "R") {
+    if (INPUT === "R") {
       this.#bridge_down = [];
       this.#bridge_up = [];
       this.#bridge_order = 0;
-      this.move();
+      this.#trial_count++;
+      await this.move();
     }
+    if (INPUT === "Q") OutputView.printResult(this.resultObj());
+  }
+
+  resultObj() {
+    return {
+      bridge_up: this.#bridge_up,
+      bridge_down: this.#bridge_down,
+      trial_pass: this.#trial_pass,
+      trial_count: this.#trial_count,
+    };
   }
 }
 
