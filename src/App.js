@@ -32,9 +32,9 @@ class App {
   }
 
   #playUserResult(){
-    // R혹은 Q를 입력받는다.
-    // 예외처리
-    // R이면 시도횟수 +1 #playUserTurn() 호출
+    const USER_INPUT = InputView.readGameCommand();
+    const RESULT = this.#bridgeGame.retry(USER_INPUT)
+    if(RESULT) this.#playUserTurn()
   }
 }
 

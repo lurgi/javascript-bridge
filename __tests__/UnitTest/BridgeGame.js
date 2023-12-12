@@ -17,4 +17,15 @@ describe("bridgeGame", () => {
     bridge.bridge = ["U", "D"];
     expect(bridge.move(input)).toStrictEqual(returnString);
   });
+
+  test.each([
+    ["R", true],
+    ["Q", false],
+  ])("통과 테스트", (input, reutnrValue) => {
+    expect(bridge.retry(input)).toStrictEqual(reutnrValue);
+  });
+
+  test.each([" ", "qr", "T"])("에러 테스트", (input) => {
+    expect(() => bridge.retry(input)).toThrow("[ERROR]");
+  });
 });
