@@ -43,11 +43,11 @@
    - 유효성 검사
 2. [ ] 플레이어 입력
 
-   1. [ ] playUserTurn
-      - [ ] 실패시 #playUserResult() 호출
-      - [ ] 통과시 #playUserTurn() 호출
-      - [ ] 다리 통과시 함수 종료 return
-      - [ ] 잘못된 입력시 Error
+   1. [x] playUserTurn
+      - [x] 실패시 #playUserResult() 호출
+      - [x] 통과시 #playUserTurn() 호출
+      - [x] 다리 통과시 함수 종료 return
+      - [x] 잘못된 입력시 Error
    2. [ ] playUserResult
       - R혹은 Q를 입력받는다.
       - 예외처리

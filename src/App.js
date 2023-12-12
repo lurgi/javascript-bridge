@@ -23,11 +23,12 @@ class App {
   }
 
   #playUserTurn(){
-    //입력값을 받고, 실패, 성공, 통과
-    // 실패시 #playUserResult() 호출
-    // 성공시 #playUserTurn() 호출
-    // 다리 통과시 함수 종료 return
-    // 잘못된 입력시 ERROR
+    const USER_INPUT = InputView.readMoving();
+    const RESULT = this.#bridgeGame.move(USER_INPUT)
+
+    if(RESULT === "pass") this.#playUserTurn()
+    if(RESULT === "fail") this.#playUserResult()
+    if(RESULT === "end") return
   }
 
   #playUserResult(){
