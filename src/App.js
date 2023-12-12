@@ -11,16 +11,29 @@ class App {
     
     this.#bridgeGame = new BridgeGame()
 
-    this.#generateBridge()
-    
-    //TODO 플레이어 입력
+    this.#playBridge()
+    this.#playUserTurn()
     //TODO 결과 값 출력
   }
 
-  #generateBridge(){
+  #playBridge(){
     const BRIDGE_LEN = InputView.readBridgeSize();
     const BRIDGE = makeBridge(BRIDGE_LEN, BridgeRandomNumberGenerator)
     this.#bridgeGame.bridge = BRIDGE
+  }
+
+  #playUserTurn(){
+    //입력값을 받고, 실패, 성공, 통과
+    // 실패시 #playUserResult() 호출
+    // 성공시 #playUserTurn() 호출
+    // 다리 통과시 함수 종료 return
+    // 잘못된 입력시 ERROR
+  }
+
+  #playUserResult(){
+    // R혹은 Q를 입력받는다.
+    // 예외처리
+    // R이면 시도횟수 +1 #playUserTurn() 호출
   }
 }
 

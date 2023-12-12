@@ -42,4 +42,15 @@
    - U D로 표현
    - 유효성 검사
 2. [ ] 플레이어 입력
+
+   1. [ ] playUserTurn
+      - [ ] 실패시 #playUserResult() 호출
+      - [ ] 통과시 #playUserTurn() 호출
+      - [ ] 다리 통과시 함수 종료 return
+      - [ ] 잘못된 입력시 Error
+   2. [ ] playUserResult
+      - R혹은 Q를 입력받는다.
+      - 예외처리
+      - R이면 시도횟수 +1 #playUserTurn() 호출
+
 3. [ ] 결과 값 출력
