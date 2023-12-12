@@ -9,7 +9,7 @@ const INPUT_MESSAGES = {
 const ERROR_MESSAGE = "[ERROR] 입력하지 않으셨습니다.";
 
 const InputView = {
-  async readBridgeSize() {
+  readBridgeSize() {
     const INPUT = MissionUtils.Console.readLine(INPUT_MESSAGES.bridgeSize);
 
     this.inputValid(INPUT);
@@ -17,9 +17,6 @@ const InputView = {
     return Number(INPUT);
   },
 
-  /**
-   * 사용자가 이동할 칸을 입력받는다.
-   */
   readMoving() {
     const INPUT = MissionUtils.Console.readLine(INPUT_MESSAGES.moving);
 
@@ -28,9 +25,6 @@ const InputView = {
     return INPUT;
   },
 
-  /**
-   * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
-   */
   readGameCommand() {
     const INPUT = MissionUtils.Console.readLine(INPUT_MESSAGES.command);
 

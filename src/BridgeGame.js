@@ -8,6 +8,7 @@ class BridgeGame {
 
   /**@type {("U" | "D" )[]} */
   bridge;
+
   move(move) {
     this.#moveValid(move);
     if (this.bridge[this.#current] === move) {
@@ -29,11 +30,20 @@ class BridgeGame {
   retry(input) {
     if (input === "R") {
       this.#try += 1;
+      this.#current = 0;
       return true;
     }
     if (input === "Q") return false;
 
     throw new Error("[ERROR] 'R'혹은 'Q'값만 입력해주세요.");
+  }
+
+  getCurrent() {
+    return this.#current;
+  }
+
+  getTry() {
+    return this.#try;
   }
 }
 

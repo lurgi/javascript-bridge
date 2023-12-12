@@ -4,11 +4,10 @@ const BridgeMaker = require("../src/BridgeMaker");
 
 const mockQuestions = (answers) => {
   MissionUtils.Console.readLine = jest.fn();
-  answers.reduce((acc, input) => {
-    return acc.mockImplementationOnce((_, callback) => {
-      callback(input);
-    });
-  }, MissionUtils.Console.readLine);
+  MissionUtils.Console.readLine.mockImplementation(() => {
+    const input = answers.shift();
+    return input;
+  });
 };
 
 const mockRandoms = (numbers) => {
